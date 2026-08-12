@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S. - Mystic Arts & Hand Sensor Interface</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Hidden Video for Webcam Tracking -->
+        <video id="webcam-feed" playsinline autoplay muted style="display: none;"></video>
+
+        <!-- Main Mystic Arts & HUD Canvas -->
+        <canvas id="mystic-canvas"></canvas>
+
+        <!-- Futuristic HUD Overlay -->
+        <div id="hud-overlay">
+            <!-- Header Bar -->
+            <header class="hud-header">
+                <div class="header-left">
+                    <div class="arc-indicator">
+                        <i class="fa-solid fa-atom fa-spin-pulse"></i>
+                    </div>
+                    <div class="system-title">
+                        <h1>J.A.R.V.I.S.</h1>
+                        <span class="sub-title">MYSTIC ARTS & HAND SENSORS v4.0</span>
+                    </div>
+                </div>
+                <div class="header-center">
+                    <div class="status-badge" id="system-status">
+                        <span class="pulse-dot"></span>
+                        <span id="status-text">INITIALIZING QUANTUM SENSORS</span>
+                    </div>
+                    <div class="status-badge gemini-badge" id="gemini-status-btn" style="margin-left: 10px; cursor: pointer;">
+                        <i class="fa-solid fa-sparkles" style="color: #a855f7;"></i>
+                        <span id="gemini-status-text">GEMINI 2.5 FLASH</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div id="clock-display">00:00:00</div>
+                    <div class="system-date" id="date-display">AUG 02, 2026</div>
+                </div>
+            </header>
+
+            <!-- Sidebar Left: Hand Sensor Diagnostics -->
+            <aside class="hud-sidebar left-sidebar">
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <i class="fa-solid fa-hand"></i> HAND SENSORS MONITOR
+                    </div>
+                    <div class="panel-body">
+                        <div class="sensor-card">
+                            <span class="label">LEFT HAND</span>
+                            <span class="value" id="left-hand-status">NOT DETECTED</span>
+                            <div class="gesture-tag" id="left-gesture">IDLE</div>
+                        </div>
+                        <div class="sensor-card">
+                            <span class="label">RIGHT HAND</span>
+                            <span class="value" id="right-hand-status">NOT DETECTED</span>
+                            <div class="gesture-tag" id="right-gesture">IDLE</div>
+                        </div>
+                        <div class="metric-row">
+                            <span>FPS:</span>
+                            <span id="fps-counter" class="metric-val">60</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>TRACKING LATENCY:</span>
+                            <span id="latency-val" class="metric-val">12 ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> MYSTIC SPELLS MANIFEST
+                    </div>
+                    <div class="panel-body spell-list">
+                        <div class="spell-item active" id="spell-mandala">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <div class="spell-info">
+                                <span class="spell-name">TAO MANDALA SHIELD</span>
+                                <span class="spell-trigger">Trigger: Open Palm ✋</span>
+                            </div>
+                        </div>
+                        <div class="spell-item" id="spell-time">
+                            <i class="fa-solid fa-infinity"></i>
+                            <div class="spell-info">
+                                <span class="spell-name">AGAMOTTO TIME RINGS</span>
+                                <span class="spell-trigger">Trigger: OK / Ring Gesture 🤌</span>
+                            </div>
+                        </div>
+                        <div class="spell-item" id="spell-portal">
+                            <i class="fa-solid fa-circle-notch"></i>
+                            <div class="spell-info">
+                                <span class="spell-name">MIRROR DIMENSION PORTAL</span>
+                                <span class="spell-trigger">Trigger: Index Circle Point 👈</span>
+                            </div>
+                        </div>
+                        <div class="spell-item" id="spell-sparks">
+                            <i class="fa-solid fa-fire-flame-curved"></i>
+                            <div class="spell-info">
+                                <span class="spell-name">ELDRITCH WHIP / SPARKS</span>
+                                <span class="spell-trigger">Trigger: Pinch Gesture 🤏</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Sidebar Right: JARVIS Voice & AI Console -->
+            <aside class="hud-sidebar right-sidebar">
+                <div class="panel-box voice-box">
+                    <div class="panel-header">
+                        <i class="fa-solid fa-microphone"></i> VOICE ASSISTANT INTERFACE
+                    </div>
+                    <div class="panel-body">
+                        <div class="jarvis-avatar">
+                            <div class="core-ring outer"></div>
+                            <div class="core-ring middle"></div>
+                            <div class="core-ring inner"></div>
+                            <i class="fa-solid fa-microchip core-icon"></i>
+                        </div>
+                        
+                        <div class="voice-controls">
+                            <button id="btn-mic" class="hud-btn glow-btn">
+                                <i class="fa-solid fa-microphone"></i> TOGGLE VOICE LISTENING
+                            </button>
+                            <button id="btn-sound" class="hud-btn">
+                                <i class="fa-solid fa-volume-high"></i> AUDIO FX: ON
+                            </button>
+                        </div>
+
+                        <div id="jarvis-speech-bubble" class="speech-bubble">
+                            "Greetings, sir. I am J.A.R.V.I.S. Mystic Arts and hand sensor tracking are online. Show your hand to activate Eldritch shields."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-box terminal-box">
+                    <div class="panel-header">
+                        <i class="fa-solid fa-terminal"></i> ASSISTANT LOGS & SPELL DATA
+                    </div>
+                    <div class="panel-body">
+                        <div id="console-logs" class="console-output">
+                            <div class="log-entry sys">[SYSTEM] Booting J.A.R.V.I.S. Core v4.0...</div>
+                            <div class="log-entry sys">[SENSOR] Loading MediaPipe Hand Tracker...</div>
+                            <div class="log-entry magic">[MYSTIC] Eldritch particle engines initialized.</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Bottom Floating Quick Controls Bar -->
+            <footer class="hud-footer">
+                <div class="footer-center">
+                    <button class="spell-btn gemini-btn" id="btn-gemini-vision">
+                        <i class="fa-solid fa-camera-retro"></i> GEMINI VISION
+                    </button>
+                    <button class="spell-btn" id="btn-toggle-cam">
+                        <i class="fa-solid fa-video"></i> CAM VIEW: ON
+                    </button>
+                    <button class="spell-btn" data-spell="shield">
+                        <i class="fa-solid fa-shield-cat"></i> SHIELD
+                    </button>
+                    <button class="spell-btn" data-spell="time">
+                        <i class="fa-solid fa-clock-rotate-left"></i> TIME STONE
+                    </button>
+                    <button class="spell-btn" data-spell="portal">
+                        <i class="fa-solid fa-dharmachakra"></i> PORTAL
+                    </button>
+                    <button class="spell-btn" data-spell="burst">
+                        <i class="fa-solid fa-bolt"></i> SPARKS
+                    </button>
+                    <button class="spell-btn danger" id="btn-clear-spells">
+                        <i class="fa-solid fa-ban"></i> DISPEL
+                    </button>
+                    <button class="spell-btn draw-btn" id="btn-toggle-draw">
+                        <i class="fa-solid fa-pen-fancy"></i> DRAW
+                    </button>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Camera Permission Modal / Start Overlay -->
+        <div id="start-overlay" class="overlay-modal">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <i class="fa-solid fa-atom fa-spin-pulse"></i>
+                    <h2>J.A.R.V.I.S. MYSTIC ARTS ASSISTANT</h2>
+                </div>
+                <p class="modal-desc">
+                    Welcome, Master. Initialize webcam hand sensors to summon Doctor Strange Eldritch shields, magic circles, time stones, and interactive voice controls.
+                </p>
+                <div class="instructions-grid">
+                    <div class="inst-item"><span class="icon">✋</span> Palm Open &rarr; Tao Mandala Shield</div>
+                    <div class="inst-item"><span class="icon">🤌</span> OK Ring &rarr; Time Stone Arcana</div>
+                    <div class="inst-item"><span class="icon">👈</span> Index Point &rarr; Mirror Dimension Portal</div>
+                    <div class="inst-item"><span class="icon">🤏</span> Pinch &rarr; Eldritch Flame Spark Beams</div>
+                </div>
+                <button id="btn-initialize" class="primary-start-btn">
+                    <i class="fa-solid fa-power-off"></i> INITIALIZE SENSORS & MYSTIC ARTS
+                </button>
+            </div>
+        </div>
+
+        <!-- Drawing Panel Overlay -->
+        <div id="draw-panel" class="draw-panel hidden">
+            <div class="draw-panel-header">
+                <div class="draw-panel-title">
+                    <i class="fa-solid fa-pen-fancy"></i>
+                    <span>ELDRITCH SKETCHPAD</span>
+                </div>
+                <button id="btn-close-draw" class="draw-close-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="draw-toolbar">
+                <!-- Tool Selector -->
+                <div class="draw-tool-group">
+                    <button class="draw-tool-btn active" data-tool="pen" title="Pen">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="draw-tool-btn" data-tool="eraser" title="Eraser">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    <button class="draw-tool-btn" data-tool="line" title="Line">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    <button class="draw-tool-btn" data-tool="rect" title="Rectangle">
+                        <i class="fa-regular fa-square"></i>
+                    </button>
+                    <button class="draw-tool-btn" data-tool="circle" title="Circle">
+                        <i class="fa-regular fa-circle"></i>
+                    </button>
+                    <button class="draw-tool-btn" data-tool="arrow" title="Arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="draw-separator"></div>
+
+                <!-- Color Palette -->
+                <div class="draw-tool-group color-group">
+                    <div class="draw-color-swatch active" data-color="#00f0ff" style="background:#00f0ff;" title="Cyan"></div>
+                    <div class="draw-color-swatch" data-color="#ffaa00" style="background:#ffaa00;" title="Gold"></div>
+                    <div class="draw-color-swatch" data-color="#ff5500" style="background:#ff5500;" title="Orange"></div>
+                    <div class="draw-color-swatch" data-color="#00ffaa" style="background:#00ffaa;" title="Emerald"></div>
+                    <div class="draw-color-swatch" data-color="#a855f7" style="background:#a855f7;" title="Purple"></div>
+                    <div class="draw-color-swatch" data-color="#ff4444" style="background:#ff4444;" title="Red"></div>
+                    <div class="draw-color-swatch" data-color="#ffffff" style="background:#ffffff;" title="White"></div>
+                    <input type="color" id="draw-custom-color" class="draw-custom-color" value="#00f0ff" title="Custom Color">
+                </div>
+
+                <div class="draw-separator"></div>
+
+                <!-- Brush Size -->
+                <div class="draw-tool-group size-group">
+                    <label class="draw-label">SIZE</label>
+                    <input type="range" id="draw-brush-size" class="draw-range" min="1" max="30" value="3">
+                    <span id="draw-size-val" class="draw-size-val">3</span>
+                </div>
+
+                <div class="draw-separator"></div>
+
+                <!-- Actions -->
+                <div class="draw-tool-group">
+                    <button class="draw-action-btn" id="btn-draw-undo" title="Undo">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                    <button class="draw-action-btn" id="btn-draw-clear" title="Clear Canvas">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                    <button class="draw-action-btn" id="btn-draw-download" title="Download">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="draw-canvas-wrapper">
+                <canvas id="draw-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Modules -->
+    <script src="mystic_arts.js"></script>
+    <script src="hand_sensor.js"></script>
+    <script src="gemini_api.js"></script>
+    <script src="jarvis_core.js"></script>
+    <script src="draw_panel.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

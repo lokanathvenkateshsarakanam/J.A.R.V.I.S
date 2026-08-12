@@ -1,0 +1,176 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, geometry, xcolor, mdframed}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+\title{\vspace{-2cm}\textbf{\huge Exam Solutions} \\ \Large Differential Equations and Vector Calculus (Set-1)}
+\author{B.Tech II Semester Regular Examinations (June/July - 2024)}
+\date{}
+
+\begin{document}
+\maketitle
+\hrule
+\vspace{0.5cm}
+
+\section*{Part-A (Short Answer Questions - 20 Marks)}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(a) Find the order of the D.E} $\frac{d^{2}y}{dx^{2}}+2\left(\frac{dy}{dx}\right)^{2}=5y$]
+\textbf{Solution:} \\
+The highest order derivative present in the equation is the second derivative $\frac{d^2y}{dx^2}$. Thus, the order is \textbf{2}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(b) Find the I.F of} $\frac{dy}{dx}+\frac{y}{x}=x$]
+\textbf{Solution:} \\
+The given equation is a linear differential equation of the form $\frac{dy}{dx} + P(x)y = Q(x)$, where $P(x) = \frac{1}{x}$. \\
+The Integrating Factor (I.F) is $e^{\int P(x) dx} = e^{\int \frac{1}{x} dx} = e^{\ln x} = \textbf{x}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(c) Find the P.I of} $(D^{2}+2D+3)y=-30$]
+\textbf{Solution:} \\
+The Particular Integral (P.I) is given by:
+$$\text{P.I} = \frac{1}{D^2+2D+3} (-30 e^{0x})$$
+Substituting $D = 0$:
+$$\text{P.I} = \frac{-30}{0+0+3} = \textbf{-10}$$
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(d) Solve the differential equation} $(D^{2}+5D+6)y=0$]
+\textbf{Solution:} \\
+The auxiliary equation is $m^2+5m+6=0 \implies (m+2)(m+3)=0 \implies m = -2, -3$. \\
+The general solution is $\textbf{y(x) = C_1 e^{-2x} + C_2 e^{-3x}}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(e) Find the degree of partial differential equation} $\left(\frac{\partial^{2}z}{\partial x^{2}}\right)^{3}-\frac{\partial^{2}z}{\partial y^{2}}=e^{x}\sin y$]
+\textbf{Solution:} \\
+The highest order partial derivative is $2$. The highest power (exponent) of this derivative is $3$. Thus, the degree is \textbf{3}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(f) Solve the partial differential equation} $(D^{2}-a^{2}D'^2)z=0$]
+\textbf{Solution:} \\
+The auxiliary equation is $m^2 - a^2 = 0 \implies m = \pm a$. \\
+The complementary function is $\textbf{z = f_1(y+ax) + f_2(y-ax)}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(g) Find the unit normal vector to the surface} $\varphi=xy+yz+zx-3=0$ \textbf{at} (1,1,1)]
+\textbf{Solution:} \\
+The gradient is $\nabla \varphi = (y+z)\hat{i} + (x+z)\hat{j} + (x+y)\hat{k}$. \\
+At (1,1,1), $\nabla \varphi = (1+1)\hat{i} + (1+1)\hat{j} + (1+1)\hat{k} = 2\hat{i} + 2\hat{j} + 2\hat{k}$. \\
+The unit normal vector $\hat{n} = \frac{\nabla \varphi}{|\nabla \varphi|} = \frac{2\hat{i}+2\hat{j}+2\hat{k}}{\sqrt{2^2+2^2+2^2}} = \frac{2\hat{i}+2\hat{j}+2\hat{k}}{\sqrt{12}} = \textbf{\frac{1}{\sqrt{3}}(\hat{i}+\hat{j}+\hat{k})}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(h) Find} $\nabla \varphi$ \textbf{where} $\varphi=x^{2}y+yz^{2}+zx-2=0$ \textbf{at} (1,-1,0)]
+\textbf{Solution:} \\
+$\nabla \varphi = \frac{\partial \varphi}{\partial x}\hat{i} + \frac{\partial \varphi}{\partial y}\hat{j} + \frac{\partial \varphi}{\partial z}\hat{k} = (2xy+z)\hat{i} + (x^2+z^2)\hat{j} + (2yz+x)\hat{k}$. \\
+At (1,-1,0), $\nabla \varphi = (2(1)(-1)+0)\hat{i} + (1^2+0)\hat{j} + (2(-1)(0)+1)\hat{k} = \textbf{-2\hat{i} + \hat{j} + \hat{k}}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(i) Define line integral.}]
+\textbf{Solution:} \\
+A line integral is an integral where the function to be integrated is evaluated along a curve $C$. For a vector field $\vec{F}$, it is denoted as $\int_C \vec{F} \cdot d\vec{r}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{1(j) Write the relation between the volume integral in terms of surface integral.}]
+\textbf{Solution:} \\
+By \textbf{Gauss's Divergence Theorem}, the surface integral of a vector field over a closed surface $S$ is equal to the volume integral of the divergence over the enclosed volume $V$:
+$$\iint_S \vec{F} \cdot \hat{n} dS = \iiint_V (\nabla \cdot \vec{F}) dV$$
+\end{tcolorbox}
+
+\newpage
+\section*{Part-B (Long Answer Questions - 50 Marks)}
+\textit{Note: One question from each unit has been solved as per the examination instructions.}
+
+\subsection*{Unit-I}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=\textbf{2(b) Solve the differential equation} $\frac{dy}{dx}+\frac{x^{2}+y^{2}+x}{xy}=0$]
+\textbf{Solution:} \\
+Rearranging the equation:
+$$(x^2+y^2+x)dx + xy dy = 0$$
+This is of the form $Mdx + Ndy = 0$, where $M = x^2+y^2+x$ and $N = xy$.
+$$\frac{\partial M}{\partial y} = 2y, \quad \frac{\partial N}{\partial x} = y$$
+Since $\frac{\partial M}{\partial y} \neq \frac{\partial N}{\partial x}$, the equation is not exact.
+Now, find $\frac{1}{N}\left(\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}\right) = \frac{2y-y}{xy} = \frac{1}{x} = f(x)$. \\
+The Integrating Factor (I.F.) is $e^{\int f(x) dx} = e^{\int \frac{1}{x} dx} = e^{\ln x} = x$. \\
+Multiply the original equation by $x$:
+$$(x^3+xy^2+x^2)dx + (x^2y)dy = 0$$
+Now, $M_1 = x^3+xy^2+x^2$ and $N_1 = x^2y$.
+$$\frac{\partial M_1}{\partial y} = 2xy, \quad \frac{\partial N_1}{\partial x} = 2xy \implies \text{Exact.}$$
+The general solution is given by:
+$$\int M_1 dx \text{ (treating $y$ as constant)} + \int \text{terms of } N_1 \text{ independent of } x \ dy = C$$
+$$\int (x^3+xy^2+x^2) dx + \int (0) dy = C$$
+$$\textbf{\frac{x^4}{4} + \frac{x^2y^2}{2} + \frac{x^3}{3} = C}$$
+\end{tcolorbox}
+
+\subsection*{Unit-II}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=\textbf{4(a) Solve the differential equation} $(D^{2}-5D+6)y=\sin 3x$]
+\textbf{Solution:} \\
+\textbf{1. Complementary Function (C.F.):} \\
+The auxiliary equation is $m^2-5m+6=0 \implies (m-2)(m-3)=0 \implies m=2, 3$. \\
+$$y_c = C_1e^{2x} + C_2e^{3x}$$
+\textbf{2. Particular Integral (P.I.):} \\
+$$y_p = \frac{1}{D^2-5D+6} \sin 3x$$
+Substitute $D^2 = -a^2 = -3^2 = -9$:
+$$y_p = \frac{1}{-9-5D+6} \sin 3x = \frac{1}{-5D-3} \sin 3x$$
+Multiply numerator and denominator by $(3-5D)$:
+$$y_p = \frac{-5D+3}{(-5D-3)(-5D+3)} \sin 3x = \frac{-5D+3}{25D^2-9} \sin 3x$$
+Substitute $D^2 = -9$ again:
+$$y_p = \frac{-5D+3}{25(-9)-9} \sin 3x = \frac{-5(3\cos 3x) + 3\sin 3x}{-234} = \frac{5\cos 3x - \sin 3x}{78}$$
+\textbf{General Solution ($y = y_c + y_p$):}
+$$\textbf{y = C_1e^{2x} + C_2e^{3x} + \frac{5\cos 3x - \sin 3x}{78}}$$
+\end{tcolorbox}
+
+\subsection*{Unit-III}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=\textbf{6(a) Find partial differential equation by eliminating arbitrary function from} $z=f(x-y)$]
+\textbf{Solution:} \\
+Given $z = f(x-y)$. Let $u = x-y$, so $z = f(u)$. \\
+Differentiating partially with respect to $x$:
+$$p = \frac{\partial z}{\partial x} = f'(u) \cdot \frac{\partial u}{\partial x} = f'(x-y) \cdot 1 = f'(x-y) \quad \text{--- (1)}$$
+Differentiating partially with respect to $y$:
+$$q = \frac{\partial z}{\partial y} = f'(u) \cdot \frac{\partial u}{\partial y} = f'(x-y) \cdot (-1) = -f'(x-y) \quad \text{--- (2)}$$
+Adding (1) and (2):
+$$p + q = f'(x-y) - f'(x-y) = 0$$
+$$\textbf{p + q = 0}$$
+\end{tcolorbox}
+
+\subsection*{Unit-IV}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=\textbf{8(a) Prove that} $\nabla(r^{n})=nr^{n-2}\overline{r}$]
+\textbf{Solution:} \\
+Let $\overline{r} = x\hat{i} + y\hat{j} + z\hat{k}$, and $r = |\overline{r}| = \sqrt{x^2+y^2+z^2} \implies r^2 = x^2+y^2+z^2$. \\
+Differentiating w.r.t $x$:
+$$2r \frac{\partial r}{\partial x} = 2x \implies \frac{\partial r}{\partial x} = \frac{x}{r}$$
+Similarly, $\frac{\partial r}{\partial y} = \frac{y}{r}$ and $\frac{\partial r}{\partial z} = \frac{z}{r}$. \\
+Now, $\nabla(r^n) = \hat{i}\frac{\partial (r^n)}{\partial x} + \hat{j}\frac{\partial (r^n)}{\partial y} + \hat{k}\frac{\partial (r^n)}{\partial z}$
+$$= \hat{i} \left(n r^{n-1} \frac{\partial r}{\partial x}\right) + \hat{j} \left(n r^{n-1} \frac{\partial r}{\partial y}\right) + \hat{k} \left(n r^{n-1} \frac{\partial r}{\partial z}\right)$$
+$$= n r^{n-1} \left( \hat{i} \frac{x}{r} + \hat{j} \frac{y}{r} + \hat{k} \frac{z}{r} \right) = \frac{n r^{n-1}}{r} (x\hat{i} + y\hat{j} + z\hat{k})$$
+$$= \textbf{n r^{n-2} \overline{r}}$$
+\end{tcolorbox}
+
+\subsection*{Unit-V}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=\textbf{10. Verify Green's theorem in plane for} $\oint(x^{2}-xy^{3})dx+(y^{2}-2xy)dy$ \textbf{where C is the square with (0, 0), (2, 0), (2, 2) and (0, 2).}]
+\textit{(Note: Corrected a typo in the original paper's coordinates which listed (0,2) twice, replacing the second point with (2,0) to properly form a square).} \\
+\textbf{Solution:} \\
+Green's Theorem states:
+$$\oint_C (Mdx + Ndy) = \iint_R \left(\frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}\right) dx dy$$
+Here $M = x^2-xy^3$ and $N = y^2-2xy$.
+$$\frac{\partial M}{\partial y} = -3xy^2, \quad \frac{\partial N}{\partial x} = -2y$$
+
+\textbf{RHS (Double Integral):}
+$$\iint_R (-2y - (-3xy^2)) dx dy = \int_0^2 \int_0^2 (3xy^2 - 2y) dy dx$$
+$$= \int_0^2 \left[ x y^3 - y^2 \right]_{y=0}^{2} dx = \int_0^2 (8x - 4) dx$$
+$$= \left[ 4x^2 - 4x \right]_0^2 = (16 - 8) - 0 = \textbf{8}$$
+
+\textbf{LHS (Line Integral):} $C$ is broken into 4 paths: $C_1, C_2, C_3, C_4$.
+\begin{itemize}
+    \item Along $C_1$ (0,0 to 2,0): $y=0 \implies dy=0$. \\
+    $\int_{C_1} = \int_0^2 x^2 dx = \left[\frac{x^3}{3}\right]_0^2 = \frac{8}{3}$.
+    \item Along $C_2$ (2,0 to 2,2): $x=2 \implies dx=0$. \\
+    $\int_{C_2} = \int_0^2 (y^2 - 4y) dy = \left[\frac{y^3}{3} - 2y^2\right]_0^2 = \frac{8}{3} - 8 = -\frac{16}{3}$.
+    \item Along $C_3$ (2,2 to 0,2): $y=2 \implies dy=0$. \\
+    $\int_{C_3} = \int_2^0 (x^2 - 8x) dx = \left[\frac{x^3}{3} - 4x^2\right]_2^0 = 0 - (\frac{8}{3} - 16) = \frac{40}{3}$.
+    \item Along $C_4$ (0,2 to 0,0): $x=0 \implies dx=0$. \\
+    $\int_{C_4} = \int_2^0 y^2 dy = \left[\frac{y^3}{3}\right]_2^0 = -\frac{8}{3}$.
+\end{itemize}
+Total Line Integral = $\frac{8}{3} - \frac{16}{3} + \frac{40}{3} - \frac{8}{3} = \frac{24}{3} = \textbf{8}$. \\
+Since LHS = RHS, Green's Theorem is \textbf{verified}.
+\end{tcolorbox}
+
+\end{document}
